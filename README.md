@@ -28,7 +28,7 @@ cd covGapProb && make
 # Input desired length of chromosome after createGenome.py 
 # Output in "simGenome.fasta"
 
-python3 /scripts/create_genome.py 1000000
+python3 create_genome.py 1000000
 
 # Simulate and sumarize reads from read length distribution for two haplotypes
 
@@ -55,8 +55,8 @@ python3 /scripts/create_genome.py 1000000
 # Choose scaling factor to scale down read lengths
 # For computation new genome size and read lengths will be ceiling value of initial_size / scaling_factor
 
-python3 /scripts/scale_down.py originalReadLengthsHap1.txt shortLengthsHap1.txt 1000
-python3 /scripts/scale_down.py originalReadLengthsHap2.txt shortLengthsHap2.txt 1000
+python3 scale_down.py originalReadLengthsHap1.txt shortLengthsHap1.txt 1000
+python3 scale_down.py originalReadLengthsHap2.txt shortLengthsHap2.txt 1000
 
 # Run computation
 tail -2 readsHap1.fasta | head -1 | awk -F'[=,]' '{print $2}' > readCountHap1.txt
