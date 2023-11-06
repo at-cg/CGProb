@@ -78,7 +78,7 @@ int main(int argc, char *argv[]){
     int option;
 
     int32_t precision = 128;
-    int32_t genomeSize = 100000;
+    int32_t genomeSize = 1000;
     int32_t readCountHap1 = -1;
     int32_t readCountHap2 = -1;
     int32_t hetLocus = 200;
