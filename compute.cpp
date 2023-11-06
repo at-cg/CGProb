@@ -77,12 +77,12 @@ int main(int argc, char *argv[]){
 
     int option;
 
-    int32_t precision = -1;
-    int32_t genomeSize = -1;
+    int32_t precision = 128;
+    int32_t genomeSize = 100000;
     int32_t readCountHap1 = -1;
     int32_t readCountHap2 = -1;
-    int32_t hetLocus = -1;
-    int32_t threadCount = -1;
+    int32_t hetLocus = 200;
+    int32_t threadCount = 32;
     
     std::string readDistFileHap1;
     std::string readDistFileHap2;
