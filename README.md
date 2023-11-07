@@ -33,7 +33,7 @@ python3 create_genome.py 1000000
 # Simulate and sumarize reads from read length distribution for two haplotypes
 
 /install/dir/for/seqrequester/build/bin/seqrequester simulate \
--truncate \
+-circular \
 -genome simGenome.fasta \
 -genomesize 1000000 \
 -coverage 50 \
@@ -43,7 +43,7 @@ python3 create_genome.py 1000000
 /install/dir/for/seqrequester/build/bin/seqrequester summarize -simple readsHap1.fasta > originalReadLengthsHap1.txt
 
 /install/dir/for/seqrequester/build/bin/seqrequester simulate \
--truncate \
+-circular \
 -genome simGenome.fasta \
 -genomesize 1000000 \
 -coverage 50 \
@@ -63,15 +63,7 @@ tail -2 readsHap1.fasta | head -1 | awk -F'[=,]' '{print $2}' > readCountHap1.tx
 tail -2 readsHap2.fasta | head -1 | awk -F'[=,]' '{print $2}' > readCountHap2.txt
 
 /install/dir/for/CGProb/compute \
--g 1000 \
--R $(cat readCountHap1.txt) \
--r $(cat readCountHap2.txt) \
--h 200 \
--D shortLengthsHap1.txt \
--d shortLengthsHap2.txt \
--p 128 \
--t 256 \
-> output.txt
+-R $(cat readCountHap1.txt) -r $(cat readCountHap2.txt) -D shortLengthsHap1.txt -d shortLengthsHap2.txt > output.txt
 
 tail output.txt | grep "probability = " | awk '{print $3}' > probability.txt
 ```
