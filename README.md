@@ -1,6 +1,8 @@
 ## <a name="intro"></a>Introduction
 
-The string graph formulation for genome assembly involves deleting reads that are entirely contained in longer reads. This is known be an unsafe operation; this heuristic occasionally disconnects the walks corresponding to true chromosome sequences. CGProb estimates the probability of observing a gap. CGProb takes the genome length, coverage on each haplotype, and the sequencing read length distribution as input. It estimates the probability of the occurence of a coverage gap after a heterozygous locus on the second haplotype by counting the number of read sequencing outputs which have a coverage gap and dividing it by the total number of read sequencing outputs.
+The string graph formulation for genome assembly involves deleting reads that are entirely contained in longer reads. This is known be an unsafe operation; this heuristic occasionally disconnects the walks corresponding to true chromosome sequences. 
+
+CGProb estimates the probability of observing a gap. CGProb takes the genome length, coverage on each haplotype, and the sequencing read length distribution as input. It estimates the probability of the occurence of a coverage gap after a heterozygous locus on the second haplotype by counting the number of read sequencing outputs which have a coverage gap and dividing it by the total number of read sequencing outputs.
 
 ## <a name="install"></a>Installation
 
