@@ -12,15 +12,17 @@ Dependencies: GCC (tested with 11.3.0), git 2.25.1 or higher, gmp library for c+
 
 ```
 git clone https://github.com/marbl/seqrequester.git
+cd seqrequester
 git checkout 31141c14d80fe0dde2766bcc3e622bf600e2bba4
+cd src && make -j 12
 ```
 
 2. Install gmp (https://anaconda.org/conda-forge/gmp)
 
-3. Activate environment containing gmp
+3. Activate an environment containing gmp
 
 ```
-conda activate myenv
+conda activate <myenv>
 ```
 
 3. Install CGProb
@@ -37,29 +39,8 @@ make
 ## <a name="started"></a>How to Use
 
 ```sh
-# Install seqrequester
-# Dependencies: GCC (tested with 11.3.0), git 2.25.1 or higher, 
-
-cd /install/dir/for/seqrequester
-
-git clone https://github.com/marbl/seqrequester.git
-git checkout 31141c14d80fe0dde2766bcc3e622bf600e2bba4
-
-cd src && make -j 12
-
 # Activate conda environment containing gmp (https://anaconda.org/conda-forge/gmp)
 conda activate myenv
-
-# Install CGProb
-# Dependencies:
-# GCC 11.2.0 or higher, C++ version standard c++2b, 
-# gmp library for c++ version 6.2.1
-cd /install/dir/for/CGProb
-
-git clone https://github.com/at-cg/CGProb.git
-cd CGProb
-python3 create_makefile.py /home/anaconda3/envs/myenv/include /home/anaconda3/envs/myenv/lib > makefile
-make
 
 # Create artifical genome for seqrequester. 
 # Input desired length of chromosome after createGenome.py 
