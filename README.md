@@ -4,6 +4,36 @@ CGProb estimates the probability of observing a coverage gap after a heterozygou
 
 For ease of computation CGProb allows users to scale down the longer read lengths by a constant factor. This factor can be chosen by the user.
 
+## <a name="install"></a>Installation
+
+1. Install seqrequester
+
+Dependencies: GCC (tested with 11.3.0), git 2.25.1 or higher, gmp library for c++
+
+```
+git clone https://github.com/marbl/seqrequester.git
+git checkout 31141c14d80fe0dde2766bcc3e622bf600e2bba4
+```
+
+2. Install gmp (https://anaconda.org/conda-forge/gmp)
+
+3. Activate environment containing gmp
+
+```
+conda activate myenv
+```
+
+3. Install CGProb
+
+Dependencies: gcc version 11.2.0 or higher; GMP version 6.2.1 or higher
+
+```
+git clone https://github.com/at-cg/CGProb.git
+cd CGProb
+python3 create_makefile.py /home/anaconda3/envs/myenv/include /home/anaconda3/envs/myenv/lib > makefile
+make
+```
+
 ## <a name="started"></a>How to Use
 
 ```sh
@@ -111,36 +141,6 @@ Inputs to the executable `compute` are:
 
 Output File:
 Currently, the executable `compute` prints to stdout. This can be redirected as evinced in the How to Use section. The last line in `output.txt` contains the probability of observing a coverage gap on the second haplotype near a heterozygous locus due to contained read deletion.
-
-## <a name="install"></a>Installation
-
-1. Install seqrequester
-
-Dependencies: GCC (tested with 11.3.0), git 2.25.1 or higher, gmp library for c++
-
-```
-git clone https://github.com/marbl/seqrequester.git
-git checkout 31141c14d80fe0dde2766bcc3e622bf600e2bba4
-```
-
-2. Install gmp (https://anaconda.org/conda-forge/gmp)
-
-3. Activate environment containing gmp
-
-```
-conda activate myenv
-```
-
-3. Install CGProb
-
-Dependencies: gcc version 11.2.0 or higher; GMP version 6.2.1 or higher
-
-```
-git clone https://github.com/at-cg/CGProb.git
-cd CGProb
-python3 create_makefile.py /home/anaconda3/envs/myenv/include /home/anaconda3/envs/myenv/lib > makefile
-make
-```
 
 ## <a name="examples"></a>Examples
 
