@@ -1,8 +1,6 @@
 ## <a name="intro"></a>Introduction
 
-The string graph formulation for genome assembly involves deleting reads that are entirely contained in longer reads. This is an unsafe operation because because this heuristic occasionally disconnects the walks corresponding to true chromosome sequences. CGProb estimates the probability of observing a gap. CGProb takes the genome length, coverage on each haplotype, the sequencing read length distribution as input. It estimates the probability of observing a coverage gap after a heterozygous locus on the second haplotype by counting the number of read sequencing outputs which have a coverage gap and dividing it by the total number of read sequencing outputs.
-
-For ease of computation, CGProb allows users to scale down the longer read lengths by a constant factor. This factor can be chosen by the user.
+The string graph formulation for genome assembly involves deleting reads that are entirely contained in longer reads. This is known be an unsafe operation; this heuristic occasionally disconnects the walks corresponding to true chromosome sequences. CGProb estimates the probability of observing a gap. CGProb takes the genome length, coverage on each haplotype, and the sequencing read length distribution as input. It estimates the probability of the occurence of a coverage gap after a heterozygous locus on the second haplotype by counting the number of read sequencing outputs which have a coverage gap and dividing it by the total number of read sequencing outputs.
 
 ## <a name="install"></a>Installation
 
@@ -71,7 +69,7 @@ python3 create_genome.py 1000000
 /install/dir/for/seqrequester/build/bin/seqrequester summarize -simple readsHap2.fasta > originalReadLengthsHap2.txt
 
 # Choose scaling factor to scale down read lengths
-# For computation new genome size and read lengths will be ceiling value of initial_size / scaling_factor
+# For computation, new genome size and read lengths will be ceiling value of initial_size / scaling_factor
 
 python3 scale_down.py originalReadLengthsHap1.txt shortLengthsHap1.txt 1000
 python3 scale_down.py originalReadLengthsHap2.txt shortLengthsHap2.txt 1000
@@ -86,7 +84,7 @@ tail -2 readsHap2.fasta | head -1 | awk -F'[=,]' '{print $2}' > readCountHap2.tx
 tail output.txt | grep "probability = " | awk '{print $3}' > probability.txt
 ```
 
-The output is stored in `probability.txt`. It is recommended that initial genome size is set to about 1,000,000 bp. We recommend scaling reads lengths down by a factor of 1000.
+The output is stored in `probability.txt`. It is recommended that initial genome size is set to about 1 Mbp. For ease of computation, CGProb allows users to scale down the longer read lengths by a constant factor. This factor can be chosen by the user. We recommend scaling reads lengths down by a factor of 1000.
 
 ## <a name="use"></a>Usage Details
 
