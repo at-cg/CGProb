@@ -4,6 +4,8 @@ The [string graph formulation](https://doi.org/10.1093/bioinformatics/bti1114) f
 
 CGProb estimates the probability of the occurence of a gap due to contained read deletion. CGProb takes the genome length, coverage on each haplotype, and the sequencing read length distribution as input. It estimates the probability of the occurence of a coverage gap after a heterozygous locus on the second haplotype by counting the number of read sequencing outputs which have a coverage gap and dividing it by the total number of read sequencing outputs.
 
+The size of the sample space, i.e., the number of all possible read sequencing outputs grows combinatorially with the number of distinct read lengths and coverage. Simulating and testing each individual read sequencing output for a coverage gap event would be a Sisyphean endeavour. CGProb instead uses efficient partitioning of the sample space and [ordinary generating functions](https://en.wikipedia.org/wiki/Generating_function#Ordinary_generating_functions) to calculate the probability in polynomial time.
+
 ## <a name="install"></a>Installation
 
 1. Install seqrequester
