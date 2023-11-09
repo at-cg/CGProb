@@ -8,7 +8,7 @@ The size of the sample space, i.e., the number of all possible read sequencing o
 
 ## <a name="install"></a>Installation
 
-1. Install seqrequester
+1. Install [seqrequester](https://github.com/marbl/seqrequester)
 
 Dependencies: GCC (tested with 11.3.0), git 2.25.1 or higher, gmp library for c++
 
