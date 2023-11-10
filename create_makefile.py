@@ -19,7 +19,7 @@ print(".PHONY: all clean\n")
 print("all: compute\n")
 
 print("compute: compute.cpp")
-print(f"\t$(CC) $(CFLAGS) $(OMP) $(STD) -o compute compute.cpp $(LIBS) -l {path_to_include} -L {path_to_lib}\n")
+print(f"\t$(CC) $(CFLAGS) $(OMP) $(STD) -o compute compute.cpp $(LIBS) -I {path_to_include} -L {path_to_lib}\n")
 
 print("clean:")
 print("\trm -f compute")
