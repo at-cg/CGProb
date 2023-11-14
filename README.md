@@ -175,4 +175,4 @@ tail output.txt | grep "probability = " | awk '{print $3}' > probability.txt
 ```
 
 ## <a name="papers"></a>Preprint
-Coming soon
+Sudhanva Shyam Kamath, Mehak Bindra, Debnath Pal, Chirag Jain. [Telomere-to-telomere assembly by preserving contained reads](https://doi.org/10.1101/2023.11.07.565066). Biorxiv (November 2023).
