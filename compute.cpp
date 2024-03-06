@@ -1925,41 +1925,41 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
             else {
                 /* 
                     Compute N2
-                    j == x2 means the reads are in class 1, or class 3 which upon 
+                    j == x1 means the reads are in class 1, or class 3 which upon 
                     deletion create a coverage gap.
-                    (j >= hetLocus) && (j <= x1) accounts for some of the reads in 
+                    (j >= hetLocus) && (j <= x2) accounts for some of the reads in 
                     class 2, and some reads in class 3 which upon deletion do not 
                     create a coverage gap.
-                    (j >= x1 + 1) && (j <= (x2-1)) accounts for the remaining reads
+                    (j >= x2 + 1) && (j <= (x1-1)) accounts for the remaining reads
                     in class 2, and those reads in class 3 which upon deletion 
                     cause a coverage gap.
                     The rest are class 4.
                 */
                 for (int32_t i = 0; i < distinctReadLengthsHap2; i++) {
                     for (int32_t j = 1; j <= genomeSize; j++) {
-                        if (j == x1) {
+                        if (j == x2) {
                             // Group 1, 3b, 3c
                             // Account for 1 <= i <= maxReadLengthHap2
-                            if (validReadLengthsHap2[i] >= ((x1 - hetLocus) + 1)) {
+                            if (validReadLengthsHap2[i] >= ((x2 - hetLocus) + 1)) {
                                 // Group 1 (valid)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
-                            else if (((x1 - x2) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((x1 - hetLocus) + 1))) {
+                            else if (((x2 - x1) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((x2 - hetLocus) + 1))) {
                                 // Group 3b (valid)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
                             else {
-                                // Group 3c (valid) if 1 <= i <= (x1 - x2)
+                                // Group 3c (valid) if 1 <= i <= (x2 - x1)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
                         }
-                        else if (((x2 + 1) <= j) && (j <= (x1 - 1))) {
+                        else if (((x1 + 1) <= j) && (j <= (x2 - 1))) {
                             // Group 2, 3b, 3c
                             // Account for 1 <= i <= maxReadLengthHap2
                             if (validReadLengthsHap2[i] >= ((j - hetLocus) + 1)) {
@@ -1968,20 +1968,20 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
-                            else if (((j - x2) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((j - hetLocus) + 1))) {
+                            else if (((j - x1) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((j - hetLocus) + 1))) {
                                 // Group 3b (valid)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
                             else {
-                                // Group 3c (valid) if 1 <= i <= (j - x2)
+                                // Group 3c (valid) if 1 <= i <= (j - x1)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
                         }
-                        else if (((hetLocus + 1) < j) && (j <= x2)) {
+                        else if (((hetLocus + 1) < j) && (j <= x1)) {
                             // Group 2, 3a
                             // Account for 1 <= i <= maxReadLengthHap2
                             if (validReadLengthsHap2[i] >= ((j - hetLocus) + 1)) {
@@ -2007,7 +2007,7 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                         else if (j < hetLocus) {
                             // Group 4
                             // Account for 1 <= i <= maxReadLengthHap2
-                            if (validReadLengthsHap2[i] <= ((genomeSize + j) - x2)) {
+                            if (validReadLengthsHap2[i] <= ((genomeSize + j) - x1)) {
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
@@ -2019,9 +2019,9 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                             }
                         }
                         else {
-                            // Group 4  j > x1
+                            // Group 4  j > x2
                             // Account for 1 <= i <= maxReadLengthHap2
-                            if (validReadLengthsHap2[i] <= (j - x2)) {
+                            if (validReadLengthsHap2[i] <= (j - x1)) {
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
@@ -2071,41 +2071,41 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
 
                 /* 
                     Compute N21
-                    j == x1 means the reads are in class 1, or class 3 which upon 
+                    j == x2 means the reads are in class 1, or class 3 which upon 
                     deletion create a coverage gap.
-                    (j >= hetLocus) && (j <= x2) accounts for some of the reads in 
+                    (j >= hetLocus) && (j <= x1) accounts for some of the reads in 
                     class 2, and some reads in class 3 which upon deletion do not 
                     create a coverage gap.
-                    (j >= x2 + 1) && (j <= (x1-1)) accounts for the remaining reads
+                    (j >= x1 + 1) && (j <= (x2-1)) accounts for the remaining reads
                     in class 2, and those reads in class 3 which upon deletion 
                     cause a coverage gap.
                     The rest are class 4.
                 */
                 for (int32_t i = 0; i < distinctReadLengthsHap2; i++) {
                     for (int32_t j = 1; j <= genomeSize; j++) {
-                        if (j == x1) {
+                        if (j == x2) {
                             // Group 1, 3b, 3c
                             // Account for 1 <= i <= maxReadLengthHap2
-                            if (validReadLengthsHap2[i] >= ((x1 - hetLocus) + 1)) {
+                            if (validReadLengthsHap2[i] >= ((x2 - hetLocus) + 1)) {
                                 // Group 1 (invalid)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 0);
                                 }
                             }
-                            else if (((x1 - x2) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((x1 - hetLocus) + 1))) {
+                            else if (((x2 - x1) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((x2 - hetLocus) + 1))) {
                                 // Group 3b (valid)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
                             else {
-                                // Group 3c (valid) if 1 <= i <= (x1 - x2)
+                                // Group 3c (valid) if 1 <= i <= (x2 - x1)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
                         }
-                        else if (((x2 + 1) <= j) && (j <= (x1 - 1))) {
+                        else if (((x1 + 1) <= j) && (j <= (x2 - 1))) {
                             // Group 2, 3b, 3c
                             // Account for 1 <= i <= maxReadLengthHap2
                             if (validReadLengthsHap2[i] >= ((j - hetLocus) + 1)) {
@@ -2114,20 +2114,20 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
-                            else if (((j - x2) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((j - hetLocus) + 1))) {
+                            else if (((j - x1) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((j - hetLocus) + 1))) {
                                 // Group 3b (valid)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
                             else {
-                                // Group 3c (invalid) if 1 <= i <= (j - x2)
+                                // Group 3c (invalid) if 1 <= i <= (j - x1)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
                         }
-                        else if (((hetLocus + 1) < j) && (j <= x2)) {
+                        else if (((hetLocus + 1) < j) && (j <= x1)) {
                             // Group 2, 3a
                             // Account for 1 <= i <= maxReadLengthHap2
                             if (validReadLengthsHap2[i] >= ((j - hetLocus) + 1)) {
@@ -2153,7 +2153,7 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                         else if (j < hetLocus) {
                             // Group 4
                             // Account for 1 <= i <= maxReadLengthHap2
-                            if (validReadLengthsHap2[i] <= ((genomeSize + j) - x2)) {
+                            if (validReadLengthsHap2[i] <= ((genomeSize + j) - x1)) {
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
@@ -2165,9 +2165,9 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                             }
                         }
                         else {
-                            // Group 4  j > x1
+                            // Group 4  j > x2
                             // Account for 1 <= i <= maxReadLengthHap2
-                            if (validReadLengthsHap2[i] <= (j - x2)) {
+                            if (validReadLengthsHap2[i] <= (j - x1)) {
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
@@ -2216,41 +2216,41 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
 
                 /* 
                     Compute N23
-                    j == x1 means the reads are in class 1, or class 3 which upon 
+                    j == x2 means the reads are in class 1, or class 3 which upon 
                     deletion create a coverage gap.
-                    (j >= hetLocus) && (j <= x2) accounts for some of the reads in 
+                    (j >= hetLocus) && (j <= x1) accounts for some of the reads in 
                     class 2, and some reads in class 3 which upon deletion do not 
                     create a coverage gap.
-                    (j >= x2 + 1) && (j <= (x1-1)) accounts for the remaining reads
+                    (j >= x1 + 1) && (j <= (x2-1)) accounts for the remaining reads
                     in class 2, and those reads in class 3 which upon deletion 
                     cause a coverage gap.
                     The rest are class 4.
                 */
                 for (int32_t i = 0; i < distinctReadLengthsHap2; i++) {
                     for (int32_t j = 1; j <= genomeSize; j++) {
-                        if (j == x1) {
+                        if (j == x2) {
                             // Group 1, 3b, 3c
                             // Account for 1 <= i <= maxReadLengthHap2
-                            if (validReadLengthsHap2[i] >= ((x1 - hetLocus) + 1)) {
+                            if (validReadLengthsHap2[i] >= ((x2 - hetLocus) + 1)) {
                                 // Group 1 (valid)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
-                            else if (((x1 - x2) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((x1 - hetLocus) + 1))) {
+                            else if (((x2 - x1) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((x2 - hetLocus) + 1))) {
                                 // Group 3b (invalid)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 0);
                                 }
                             }
                             else {
-                                // Group 3c (valid) if 1 <= i <= (x1 - x2)
+                                // Group 3c (valid) if 1 <= i <= (x2 - x1)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
                         }
-                        else if (((x2 + 1) <= j) && (j <= (x1 - 1))) {
+                        else if (((x1 + 1) <= j) && (j <= (x2 - 1))) {
                             // Group 2, 3b, 3c
                             // Account for 1 <= i <= maxReadLengthHap2
                             if (validReadLengthsHap2[i] >= ((j - hetLocus) + 1)) {
@@ -2259,20 +2259,20 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
-                            else if (((j - x2) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((j - hetLocus) + 1))) {
+                            else if (((j - x1) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((j - hetLocus) + 1))) {
                                 // Group 3b (invalid)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 0);
                                 }
                             }
                             else {
-                                // Group 3c (valid) if 1 <= i <= (j - x2)
+                                // Group 3c (valid) if 1 <= i <= (j - x1)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
                         }
-                        else if (((hetLocus + 1) < j) && (j <= x2)) {
+                        else if (((hetLocus + 1) < j) && (j <= x1)) {
                             // Group 2, 3a
                             // Account for 1 <= i <= maxReadLengthHap2
                             if (validReadLengthsHap2[i] >= ((j - hetLocus) + 1)) {
@@ -2298,7 +2298,7 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                         else if (j < hetLocus) {
                             // Group 4
                             // Account for 1 <= i <= maxReadLengthHap2
-                            if (validReadLengthsHap2[i] <= ((genomeSize + j) - x2)) {
+                            if (validReadLengthsHap2[i] <= ((genomeSize + j) - x1)) {
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
@@ -2310,9 +2310,9 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                             }
                         }
                         else {
-                            // Group 4  j > x1
+                            // Group 4  j > x2
                             // Account for 1 <= i <= maxReadLengthHap2
-                            if (validReadLengthsHap2[i] <= (j - x2)) {
+                            if (validReadLengthsHap2[i] <= (j - x1)) {
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
@@ -2361,41 +2361,41 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
 
                 /* 
                     Compute N213
-                    j == x1 means the reads are in class 1, or class 3 which upon 
+                    j == x2 means the reads are in class 1, or class 3 which upon 
                     deletion create a coverage gap.
-                    (j >= hetLocus) && (j <= x2) accounts for some of the reads in 
+                    (j >= hetLocus) && (j <= x1) accounts for some of the reads in 
                     class 2, and some reads in class 3 which upon deletion do not 
                     create a coverage gap.
-                    (j >= x2 + 1) && (j <= (x1-1)) accounts for the remaining reads
+                    (j >= x1 + 1) && (j <= (x2-1)) accounts for the remaining reads
                     in class 2, and those reads in class 3 which upon deletion 
                     cause a coverage gap.
                     The rest are class 4.
                 */
                 for (int32_t i = 0; i < distinctReadLengthsHap2; i++) {
                     for (int32_t j = 1; j <= genomeSize; j++) {
-                        if (j == x1) {
+                        if (j == x2) {
                             // Group 1, 3b, 3c
                             // Account for 1 <= i <= maxReadLengthHap2
-                            if (validReadLengthsHap2[i] >= ((x1 - hetLocus) + 1)) {
+                            if (validReadLengthsHap2[i] >= ((x2 - hetLocus) + 1)) {
                                 // Group 1 (invalid)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 0);
                                 }
                             }
-                            else if (((x1 - x2) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((x1 - hetLocus) + 1))) {
+                            else if (((x2 - x1) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((x2 - hetLocus) + 1))) {
                                 // Group 3b (invalid)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 0);
                                 }
                             }
                             else {
-                                // Group 3c (valid) if 1 <= i <= (x1 - x2)
+                                // Group 3c (valid) if 1 <= i <= (x2 - x1)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
                         }
-                        else if (((x2 + 1) <= j) && (j <= (x1 - 1))) {
+                        else if (((x1 + 1) <= j) && (j <= (x2 - 1))) {
                             // Group 2, 3b, 3c
                             // Account for 1 <= i <= maxReadLengthHap2
                             if (validReadLengthsHap2[i] >= ((j - hetLocus) + 1)) {
@@ -2404,20 +2404,20 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
-                            else if (((j - x2) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((j - hetLocus) + 1))) {
+                            else if (((j - x1) < validReadLengthsHap2[i]) && (validReadLengthsHap2[i] < ((j - hetLocus) + 1))) {
                                 // Group 3b (invalid)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 0);
                                 }
                             }
                             else {
-                                // Group 3c (valid) if 1 <= i <= (j - x2)
+                                // Group 3c (valid) if 1 <= i <= (j - x1)
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
                             }
                         }
-                        else if (((hetLocus + 1) < j) && (j <= x2)) {
+                        else if (((hetLocus + 1) < j) && (j <= x1)) {
                             // Group 2, 3a
                             // Account for 1 <= i <= maxReadLengthHap2
                             if (validReadLengthsHap2[i] >= ((j - hetLocus) + 1)) {
@@ -2443,7 +2443,7 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                         else if (j < hetLocus) {
                             // Group 4
                             // Account for 1 <= i <= maxReadLengthHap2
-                            if (validReadLengthsHap2[i] <= ((genomeSize + j) - x2)) {
+                            if (validReadLengthsHap2[i] <= ((genomeSize + j) - x1)) {
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
@@ -2455,9 +2455,9 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                             }
                         }
                         else {
-                            // Group 4  j > x1
+                            // Group 4  j > x2
                             // Account for 1 <= i <= maxReadLengthHap2
-                            if (validReadLengthsHap2[i] <= (j - x2)) {
+                            if (validReadLengthsHap2[i] <= (j - x1)) {
                                 for (int32_t k = 1; k <= readDistHap2[validReadLengthsHap2[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap2[i][j][k], 1);
                                 }
@@ -2510,23 +2510,23 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                 */
                 for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                     for (int32_t j = 1; j <= genomeSize; j++) {
-                        if (j == x2) {
+                        if (j == x1) {
                             // Group 1, 3a
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (validReadLengthsHap1[i] >= ((x2 - hetLocus) + 1)) {
+                            if (validReadLengthsHap1[i] >= ((x1 - hetLocus) + 1)) {
                                 // Group 1 (valid)
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
                             }
                             else {
-                                // Group 3a (valid) if (i < x2)
+                                // Group 3a (valid) if (i < x1)
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
                             }
                         }
-                        else if (((hetLocus + 1) <= j) && (j <= (x2 - 1))) {
+                        else if (((hetLocus + 1) <= j) && (j <= (x1 - 1))) {
                             // Group 2, 3a
                             // Account for 1 <= i <= maxReadLengthHap1
                             if (validReadLengthsHap1[i] >= ((j - hetLocus) + 1)) {
@@ -2549,16 +2549,16 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                                 mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                             }
                         }
-                        else if (((x2 + 1) <= j) && (j <= x1)) {
+                        else if (((x1 + 1) <= j) && (j <= x2)) {
                             // Group 3b, 3c
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (((j - x2) < validReadLengthsHap1[i]) && (validReadLengthsHap1[i] < ((j - hetLocus) + 1))) {
+                            if (((j - x1) < validReadLengthsHap1[i]) && (validReadLengthsHap1[i] < ((j - hetLocus) + 1))) {
                                 // Group 3b (valid) 
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
                             }
-                            else if ((1 <= validReadLengthsHap1[i]) && (validReadLengthsHap1[i] <= (j - x2))) {
+                            else if ((1 <= validReadLengthsHap1[i]) && (validReadLengthsHap1[i] <= (j - x1))) {
                                 // Group 3c (valid) 
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
@@ -2574,7 +2574,7 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                         else if (j < hetLocus) {
                             // Group 4
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (validReadLengthsHap1[i] <= ((genomeSize + j) - x2)) {
+                            if (validReadLengthsHap1[i] <= ((genomeSize + j) - x1)) {
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
@@ -2586,9 +2586,9 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                             }
                         }
                         else {
-                            // Group 4 if j > x1
+                            // Group 4 if j > x2
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (validReadLengthsHap1[i] <= (j - x2)) {
+                            if (validReadLengthsHap1[i] <= (j - x1)) {
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
@@ -2640,23 +2640,23 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                 */
                 for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                     for (int32_t j = 1; j <= genomeSize; j++) {
-                        if (j == x2) {
+                        if (j == x1) {
                             // Group 1, 3a
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (validReadLengthsHap1[i] >= ((x2 - hetLocus) + 1)) {
+                            if (validReadLengthsHap1[i] >= ((x1 - hetLocus) + 1)) {
                                 // Group 1 (invalid)
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 0);
                                 }
                             }
                             else {
-                                // Group 3a (valid ) if (i < x2)
+                                // Group 3a (valid ) if (i < x1)
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
                             }
                         }
-                        else if (((hetLocus + 1) <= j) && (j <= (x2 - 1))) {
+                        else if (((hetLocus + 1) <= j) && (j <= (x1 - 1))) {
                             // Group 2, 3a
                             // Account for 1 <= i <= maxReadLengthHap1
                             if (validReadLengthsHap1[i] >= ((j - hetLocus) + 1)) {
@@ -2679,16 +2679,16 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                                 mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                             }
                         }
-                        else if (((x2 + 1) <= j) && (j <= x1)) {
+                        else if (((x1 + 1) <= j) && (j <= x2)) {
                             // Group 3b, 3c
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (((j - x2) < validReadLengthsHap1[i]) && (validReadLengthsHap1[i] < ((j - hetLocus) + 1))) {
+                            if (((j - x1) < validReadLengthsHap1[i]) && (validReadLengthsHap1[i] < ((j - hetLocus) + 1))) {
                                 // Group 3b (valid ) 
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
                             }
-                            else if ((1 <= validReadLengthsHap1[i]) && (validReadLengthsHap1[i] <= (j - x2))) {
+                            else if ((1 <= validReadLengthsHap1[i]) && (validReadLengthsHap1[i] <= (j - x1))) {
                                 // Group 3c (valid ) 
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
@@ -2704,7 +2704,7 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                         else if (j < hetLocus) {
                             // Group 4
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (validReadLengthsHap1[i] <= ((genomeSize + j) - x2)) {
+                            if (validReadLengthsHap1[i] <= ((genomeSize + j) - x1)) {
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
@@ -2716,9 +2716,9 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                             }
                         }
                         else {
-                            // Group 4 if j > x1
+                            // Group 4 if j > x2
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (validReadLengthsHap1[i] <= (j - x2)) {
+                            if (validReadLengthsHap1[i] <= (j - x1)) {
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
@@ -2770,23 +2770,23 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                 */
                 for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                     for (int32_t j = 1; j <= genomeSize; j++) {
-                        if (j == x2) {
+                        if (j == x1) {
                             // Group 1, 3a
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (validReadLengthsHap1[i] >= ((x2 - hetLocus) + 1)) {
+                            if (validReadLengthsHap1[i] >= ((x1 - hetLocus) + 1)) {
                                 // Group 1 (valid) 
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
                             }
                             else {
-                                // Group 3a (valid) if (i < x2)
+                                // Group 3a (valid) if (i < x1)
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
                             }
                         }
-                        else if (((hetLocus + 1) <= j) && (j <= (x2 - 1))) {
+                        else if (((hetLocus + 1) <= j) && (j <= (x1 - 1))) {
                             // Group 2, 3a
                             // Account for 1 <= i <= maxReadLengthHap1
                             if (validReadLengthsHap1[i] >= ((j - hetLocus) + 1)) {
@@ -2809,16 +2809,16 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                                 mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                             }
                         }
-                        else if (((x2 + 1) <= j) && (j <= x1)) {
+                        else if (((x1 + 1) <= j) && (j <= x2)) {
                             // Group 3b, 3c
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (((j - x2) < validReadLengthsHap1[i]) && (validReadLengthsHap1[i] < ((j - hetLocus) + 1))) {
+                            if (((j - x1) < validReadLengthsHap1[i]) && (validReadLengthsHap1[i] < ((j - hetLocus) + 1))) {
                                 // Group 3b (invalid) 
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 0);
                                 }
                             }
-                            else if ((1 <= validReadLengthsHap1[i]) && (validReadLengthsHap1[i] <= (j - x2))) {
+                            else if ((1 <= validReadLengthsHap1[i]) && (validReadLengthsHap1[i] <= (j - x1))) {
                                 // Group 3c (valid) 
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
@@ -2834,7 +2834,7 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                         else if (j < hetLocus) {
                             // Group 4
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (validReadLengthsHap1[i] <= ((genomeSize + j) - x2)) {
+                            if (validReadLengthsHap1[i] <= ((genomeSize + j) - x1)) {
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
@@ -2846,9 +2846,9 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                             }
                         }
                         else {
-                            // Group 4 if j > x1
+                            // Group 4 if j > x2
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (validReadLengthsHap1[i] <= (j - x2)) {
+                            if (validReadLengthsHap1[i] <= (j - x1)) {
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
@@ -2901,23 +2901,23 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                 */
                 for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                     for (int32_t j = 1; j <= genomeSize; j++) {
-                        if (j == x2) {
+                        if (j == x1) {
                             // Group 1, 3a
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (validReadLengthsHap1[i] >= ((x2 - hetLocus) + 1)) {
+                            if (validReadLengthsHap1[i] >= ((x1 - hetLocus) + 1)) {
                                 // Group 1 (invalid) 
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 0);
                                 }
                             }
                             else {
-                                // Group 3a (valid) if (i < x2)
+                                // Group 3a (valid) if (i < x1)
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
                             }
                         }
-                        else if (((hetLocus + 1) <= j) && (j <= (x2 - 1))) {
+                        else if (((hetLocus + 1) <= j) && (j <= (x1 - 1))) {
                             // Group 2, 3a
                             // Account for 1 <= i <= maxReadLengthHap1
                             if (validReadLengthsHap1[i] >= ((j - hetLocus) + 1)) {
@@ -2940,16 +2940,16 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                                 mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                             }
                         }
-                        else if (((x2 + 1) <= j) && (j <= x1)) {
+                        else if (((x1 + 1) <= j) && (j <= x2)) {
                             // Group 3b, 3c
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (((j - x2) < validReadLengthsHap1[i]) && (validReadLengthsHap1[i] < ((j - hetLocus) + 1))) {
+                            if (((j - x1) < validReadLengthsHap1[i]) && (validReadLengthsHap1[i] < ((j - hetLocus) + 1))) {
                                 // Group 3b (invalid) 
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 0);
                                 }
                             }
-                            else if ((1 <= validReadLengthsHap1[i]) && (validReadLengthsHap1[i] <= (j - x2))) {
+                            else if ((1 <= validReadLengthsHap1[i]) && (validReadLengthsHap1[i] <= (j - x1))) {
                                 // Group 3c (valid) 
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
@@ -2965,7 +2965,7 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                         else if (j < hetLocus) {
                             // Group 4
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (validReadLengthsHap1[i] <= ((genomeSize + j) - x2)) {
+                            if (validReadLengthsHap1[i] <= ((genomeSize + j) - x1)) {
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
@@ -2977,9 +2977,9 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
                             }
                         }
                         else {
-                            // Group 4 if j > x1
+                            // Group 4 if j > x2
                             // Account for 1 <= i <= maxReadLengthHap1
-                            if (validReadLengthsHap1[i] <= (j - x2)) {
+                            if (validReadLengthsHap1[i] <= (j - x1)) {
                                 for (int32_t k = 1; k <= readDistHap1[validReadLengthsHap1[i]]; k++) {
                                     mpz_set_ui (generatingFunctionsHap1[i][j][k], 1);
                                 }
@@ -3038,7 +3038,6 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
             mpz_init (tempVar3);
             mpz_t tempVar4;
             mpz_init (tempVar4);
-
             mpz_t prodVar1;
             mpz_init (prodVar1);
             mpz_t prodVar2;
@@ -3059,6 +3058,8 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
 
             mpz_set (calcVar, aggregateCount[omp_get_thread_num()]);
             mpz_add (aggregateCount[omp_get_thread_num()], calcVar, coverageGapPermutations);
+
+            // std::cout << aggregateCount[omp_get_thread_num()] << " plus or minus " << errorTotal << std::endl;
 
             mpz_clear (tempVar1);
             mpz_clear (tempVar2);
@@ -3144,7 +3145,6 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
 
     mpf_set_q (probability, ratio);
 
-
     std::cout << "Total number of read sequencing outputs: " << denominator << std::endl;
     std::cout << "No of outputs with coverage gap event: " << numerator << std::endl;
     std::cout << "probability = " << probability << std::endl;
@@ -3155,11 +3155,8 @@ for (int32_t i = 0; i < distinctReadLengthsHap1; i++) {
         // mpz_clear (aggregateError[i]);
     }
     delete aggregateCount;
-    // delete aggregateError;
     
     mpf_clear (probability);
-    // mpz_clear (totalError);
-    // mpz_clear (relativeError);
     mpz_clear (cVar);
     mpz_clear (numerator);
     mpz_clear (denominator);
